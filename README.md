@@ -11,6 +11,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 1. Run npm i - in the cli
 <<<<<<< HEAD
 2. Run `ng serve` - in the cli
+<<<<<<< HEAD
 
 the king is back
 =======
@@ -37,3 +38,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 =======
 2. Run `ng serve` - in the cli
 >>>>>>> parent of 48bb4f6 (the king is here)
+=======
+>>>>>>> parent of 68eee95 (Revert "no king here")
