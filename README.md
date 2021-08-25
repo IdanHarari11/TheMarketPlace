@@ -8,8 +8,8 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 <<<<<<< HEAD
 ## Todo Before Use:
-
 1. Run npm i - in the cli
+<<<<<<< HEAD
 2. Run `ng serve` - in the cli
 
 the king is back
@@ -34,3 +34,6 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 >>>>>>> parent of 1562db6 (26/08 Night (Idan&Daniel))
+=======
+2. Run `ng serve` - in the cli
+>>>>>>> parent of 48bb4f6 (the king is here)
