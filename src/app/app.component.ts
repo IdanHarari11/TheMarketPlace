@@ -1,44 +1,40 @@
 import { Component, ViewChild } from '@angular/core';
 
-import {
-  ChartComponent,
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexYAxis,
-  ApexXAxis,
-  ApexTitleSubtitle,
-} from 'ng-apexcharts';
+import { ChartComponent, ApexAxisChartSeries, ApexChart, ApexYAxis, ApexXAxis, ApexTitleSubtitle } from 'ng-apexcharts';
+import { GetDataService } from './Service/get-data.service';
 
-export type ChartOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  xaxis: ApexXAxis;
-  yaxis: ApexYAxis;
-  title: ApexTitleSubtitle;
-};
+export type ChartOptions = { 
+                            series: ApexAxisChartSeries;
+                            chart: ApexChart;
+                            xaxis: ApexXAxis;
+                            yaxis: ApexYAxis;
+                            title: ApexTitleSubtitle;
+                          };
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
+
 export class AppComponent {
   @ViewChild('chart') chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
   series: ApexAxisChartSeries;
-  achart: ApexChart;
-  xaxis: ApexXAxis;
-  yaxis: ApexYAxis;
+  typeChart: ApexChart;
+  xAxis: ApexXAxis;
+  yAxis: ApexYAxis;
   title: ApexTitleSubtitle;
+  
 
-  constructor() {
+  constructor(GetDataServ: GetDataService) {
     this.series = [
       {
         name: 'candle',
         data: [
           {
-            x: new Date(1538778600000),
-            y: [6629.81, 6650.5, 6623.04, 6633.33],
+            x: new Date(1538778600000), //date
+            y: [6629.81, 6650.5, 6623.04, 6633.33], //open, high, low, close
           },
           {
             x: new Date(1538780400000),
@@ -279,35 +275,36 @@ export class AppComponent {
         ],
       },
     ];
-    this.achart = {
+    this.typeChart = {
       type: 'candlestick',
-      height: 350,
+      height: 350
     };
     this.title = {
       text: 'CandleStick Chart',
-      align: 'left',
+      align: 'left'
     };
-    this.xaxis = {
-      type: 'datetime',
+    this.xAxis = {
+      type: 'datetime'
     };
-    this.yaxis = {
+    this.yAxis = {
       tooltip: {
-        enabled: true,
+        enabled: true
       },
     };
+    console.log(GetDataServ.getData());
   }
 
-  public generateDayWiseTimeSeries(baseval: any, count: any, yrange: any) {
-    var i = 0;
-    var series = [];
-    while (i < count) {
-      var y =
-        Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
+  // public generateDayWiseTimeSeries(baseval: any, count: any, yrange: any) {
+  //   var i = 0;
+  //   var series = [];
+  //   while (i < count) {
+  //     var y =
+  //       Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
 
-      series.push([baseval, y]);
-      baseval += 86400000;
-      i++;
-    }
-    return series;
-  }
+  //     series.push([baseval, y]);
+  //     baseval += 86400000;
+  //     i++;
+  //   }
+  //   return series;
+  // }
 }

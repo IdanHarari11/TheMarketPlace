@@ -11,6 +11,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     AppRoutingModule,
     HttpClientModule,
     NgApexchartsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],
