@@ -4,6 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgApexchartsModule } from 'ng-apexcharts';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -11,6 +12,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     AppRoutingModule,
     HttpClientModule,
     NgApexchartsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],
