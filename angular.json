@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "yahoo-chart": {
+    "TheMarketPlace": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/yahoo-chart",
+            "outputPath": "dist/TheMarketPlace",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -67,10 +67,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "yahoo-chart:build:production"
+              "browserTarget": "TheMarketPlace:build:production"
             },
             "development": {
-              "browserTarget": "yahoo-chart:build:development"
+              "browserTarget": "TheMarketPlace:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -78,7 +78,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "yahoo-chart:build"
+            "browserTarget": "TheMarketPlace:build"
           }
         },
         "test": {
@@ -97,5 +97,5 @@
       }
     }
   },
-  "defaultProject": "yahoo-chart"
+  "defaultProject": "TheMarketPlace"
 }
