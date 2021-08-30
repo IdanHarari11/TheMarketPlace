@@ -1,5 +1,5 @@
 {
-  "name": "yahoo-chart",
+  "name": "the-market-place",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -20,6 +20,7 @@
     "@angular/router": "~12.2.0",
     "apexcharts": "^3.28.1",
     "chart.js": "^3.5.1",
+    "finnhub": "^1.2.6",
     "ng-apexcharts": "^1.5.12",
     "ng2-charts": "^2.4.2",
     "rxjs": "~6.6.0",
@@ -31,7 +32,7 @@
     "@angular/cli": "~12.2.2",
     "@angular/compiler-cli": "~12.2.0",
     "@types/jasmine": "~3.8.0",
-    "@types/node": "^12.11.1",
+    "@types/node": "^12.20.21",
     "jasmine-core": "~3.8.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",

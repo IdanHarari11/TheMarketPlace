@@ -1,0 +1,301 @@
+<div class="header bg-primary pb-6 pt-4">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xl-3 col-md-6">
+        <div class="card card-stats">
+          <!-- Card body -->
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h5 class="card-title text-uppercase text-muted mb-0">
+                  Total traffic
+                </h5>
+                <span class="h2 font-weight-bold mb-0">350,897</span>
+              </div>
+              <div class="col-auto">
+                <div
+                  class="
+                    icon icon-shape
+                    bg-gradient-red
+                    text-white
+                    rounded-circle
+                    shadow
+                  "
+                >
+                  <i class="ni ni-active-40"></i>
+                </div>
+              </div>
+            </div>
+            <p class="mt-3 mb-0 text-sm">
+              <span class="text-success mr-2"
+                ><i class="fa fa-arrow-up"></i> 3.48%</span
+              >
+              <span class="text-nowrap">Since last month</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-md-6">
+        <div class="card card-stats">
+          <!-- Card body -->
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h5 class="card-title text-uppercase text-muted mb-0">
+                  New users
+                </h5>
+                <span class="h2 font-weight-bold mb-0">2,356</span>
+              </div>
+              <div class="col-auto"></div>
+            </div>
+            <p class="mt-3 mb-0 text-sm">
+              <span class="text-success mr-2"
+                ><i class="fa fa-arrow-up"></i> 3.48%</span
+              >
+              <span class="text-nowrap">Since last month</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-md-6">
+        <div class="card card-stats">
+          <!-- Card body -->
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h5 class="card-title text-uppercase text-muted mb-0">Sales</h5>
+                <span class="h2 font-weight-bold mb-0">924</span>
+              </div>
+              <div class="col-auto">
+                <div
+                  class="
+                    icon icon-shape
+                    bg-gradient-green
+                    text-white
+                    rounded-circle
+                    shadow
+                  "
+                >
+                  <i class="ni ni-money-coins"></i>
+                </div>
+              </div>
+            </div>
+            <p class="mt-3 mb-0 text-sm">
+              <span class="text-success mr-2"
+                ><i class="fa fa-arrow-up"></i> 3.48%</span
+              >
+              <span class="text-nowrap">Since last month</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-md-6">
+        <div class="card card-stats">
+          <!-- Card body -->
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h5 class="card-title text-uppercase text-muted mb-0">
+                  Performance
+                </h5>
+                <span class="h2 font-weight-bold mb-0">49,65%</span>
+              </div>
+              <div class="col-auto">
+                <div
+                  class="
+                    icon icon-shape
+                    bg-gradient-info
+                    text-white
+                    rounded-circle
+                    shadow
+                  "
+                >
+                  <i class="ni ni-chart-bar-32"></i>
+                </div>
+              </div>
+            </div>
+            <p class="mt-3 mb-0 text-sm">
+              <span class="text-success mr-2"
+                ><i class="fa fa-arrow-up"></i> 3.48%</span
+              >
+              <span class="text-nowrap">Since last month</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ! Chart1 -->
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col-xl-8">
+      <div class="card bg-default">
+        <div class="card-header bg-transparent">
+          <div class="row align-items-center">
+            <div class="col">
+              <img
+                [src]="myDeatils?.logo || ''"
+                class="text-uppercase text-muted ls-1 mb-1"
+                style="max-height: 25px"
+              />
+              <!-- <h6 class="text-light text-uppercase ls-1 mb-1">Overview</h6> -->
+              <h5 class="h3 text-white mb-0">{{ StockSymbol }}</h5>
+              <span class="text-primary mr-2">{{ prices?.c }}</span>
+              <span [ngClass]="prices?.dp > 0 ? 'text-success' : 'text-danger'"
+                ><i
+                  [ngClass]="
+                    prices?.dp > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down'
+                  "
+                ></i>
+                {{ prices?.dp }}%</span
+              >
+              <span class="ml-1"
+                >(<span *ngIf="prices?.d > 0">+</span>{{ prices?.d }})</span
+              >
+            </div>
+            <div class="col">
+              <ul class="nav nav-pills justify-content-end">
+                <li class="nav-item mr-2 mr-md-0" data-toggle="chart">
+                  <div
+                    class="nav-link py-2 px-3 active"
+                    [class.active]="active == 'M'"
+                    data-toggle="tab"
+                  >
+                    <span
+                      class="d-none d-md-block cursor-pointer"
+                      (click)="setTime('Month')"
+                      >Month</span
+                    >
+                    <span class="d-md-none">M</span>
+                  </div>
+                </li>
+                <li class="nav-item" data-toggle="chart">
+                  <div
+                    class="nav-link py-2 px-3"
+                    [class.active]="active == 'W'"
+                    data-toggle="tab"
+                  >
+                    <span
+                      class="d-none d-md-block cursor-pointer"
+                      (click)="setTime('Week')"
+                      >Week</span
+                    >
+                    <span class="d-md-none">W</span>
+                  </div>
+                </li>
+                <li class="nav-item" data-toggle="chart">
+                  <div
+                    class="nav-link py-2 px-3"
+                    [class.active]="active == 'D'"
+                    data-toggle="tab"
+                  >
+                    <span
+                      class="d-none d-md-block cursor-pointer"
+                      (click)="setTime('Day')"
+                      >Day</span
+                    >
+                    <span class="d-md-none">D</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <!-- Chart1 -->
+          <div class="chart">
+            <div id="chart-sales-dark" class="chart-canvas" *ngIf="series">
+              <apx-chart
+                [series]="series"
+                [chart]="achart"
+                [xaxis]="xaxis"
+                [yaxis]="yaxis"
+                [title]="title"
+              ></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ! Serach -->
+    <div class="col-xl-4">
+      <div class="card">
+        <div class="card-header bg-transparent">
+          <div class="row align-items-center">
+            <div class="col">
+              <div class="search">
+                <input
+                  class="form-control mr-2"
+                  type="text"
+                  #searchStock
+                  [value]="myDeatils?.name"
+                  style="border: 2px solid black"
+                />
+                <button
+                  class="btn btn-outline-primary"
+                  (click)="search(searchStock.value)"
+                >
+                  Search
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" style="min-height: 423px">
+          <table>
+            <tr *ngFor="let stock of stockSearch">
+              <td (click)="getSearchStock(stock.symbol)">
+                {{ stock.symbol }} <br />
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ! Chart2 (statistic)  -->
+<div class="col-xl-12">
+  <div class="card">
+    <div class="card-header bg-transparent">
+      <div class="row align-items-center">
+        <div class="col" style="display: flex">
+          <div
+            class="
+              icon icon-shape
+              bg-gradient-orange
+              text-white
+              rounded-circle
+              shadow
+            "
+          >
+            <i class="ni ni-chart-pie-35"></i>
+          </div>
+          <h5 class="h3 mb-0 ml-2 mt-2">{{ myDeatils?.name || "" }}</h5>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <!-- Chart2 -->
+      <div class="chart" id="chartB"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ! News -->
+<div class="container">
+  <div class="art" *ngFor="let news of myNews; let i = index">
+    <img class="img-top" [src]="news.image" alt="image cap" />
+    <div class="body">
+      <a [href]="news.url" target="_blank" class="title">{{ news.headline }}</a>
+      <p class="text ptag">{{ news.summary }}</p>
+    </div>
+  </div>
+  <button (click)="getMoreNews()">More</button>
+  <button (click)="HideNews()">Hide</button>
+  <button (click)="hideAllNews()">Hide All</button>
+</div>

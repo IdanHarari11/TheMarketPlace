@@ -4,10 +4,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { NavBarComponent } from './Components/nav-bar/nav-bar.component';
+import { NewsComponent } from './Components/news/news.component';
+import { MainComponent } from './Components/main/main.component';
 
 @NgModule({
-  declarations: [AppComponent, NavBarComponent],
+  declarations: [AppComponent, NewsComponent, MainComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
