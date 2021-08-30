@@ -60,6 +60,7 @@ export class MainComponent {
         return response.json();
       }).then(
         (res) => {
+          this.stockSearch = [];
           for (let i = 0; i <= 5; i++) {
             this.stockSearch.push(res.result[i])
           }
@@ -219,13 +220,13 @@ export class MainComponent {
     this.getNews();
   }
 
-  HideNews(){
-    this.newsLimit != 5 ? this.newsLimit = this.newsLimit - 5 : '';
+  hideNews(){
+    this.newsLimit != 3 ? this.newsLimit = this.newsLimit - 3 : '';
     this.getNews();
   }
 
   hideAllNews(){
-   this.newsLimit =  5;
+   this.newsLimit = 3;
     this.getNews();
   }
 }

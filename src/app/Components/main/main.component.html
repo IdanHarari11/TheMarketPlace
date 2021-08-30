@@ -245,13 +245,9 @@
           </div>
         </div>
         <div class="card-body" style="min-height: 423px">
-          <table>
-            <tr *ngFor="let stock of stockSearch">
-              <td (click)="getSearchStock(stock.symbol)">
-                {{ stock.symbol }} <br />
-              </td>
-            </tr>
-          </table>
+            <div *ngFor="let stock of stockSearch">
+            <span class="badge badge-pill badge-default cursor-pointer" (click)="getSearchStock(stock.symbol)">{{ stock.symbol }}</span>
+            </div>
         </div>
       </div>
     </div>
@@ -295,7 +291,9 @@
       <p class="text ptag">{{ news.summary }}</p>
     </div>
   </div>
-  <button (click)="getMoreNews()">More</button>
-  <button (click)="HideNews()">Hide</button>
-  <button (click)="hideAllNews()">Hide All</button>
+  <button type="button" class="btn btn-outline-default btn-lg btn-block" (click)="getMoreNews()">More</button>
+  <div style="display: flex;"> 
+    <button type="button" class="btn btn-outline-default btn-lg btn-block" (click)="hideNews()">Hide</button>
+    <button type="button" class="btn btn-outline-default btn-lg btn-block" (click)="hideAllNews()">Hide All</button>
+  </div>
 </div>
