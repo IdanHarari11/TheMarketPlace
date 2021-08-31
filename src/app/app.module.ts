@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NewsComponent } from './Components/news/news.component';
 import { MainComponent } from './Components/main/main.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, NewsComponent, MainComponent],
@@ -14,7 +15,8 @@ import { MainComponent } from './Components/main/main.component';
     AppRoutingModule,
     HttpClientModule,
     NgApexchartsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

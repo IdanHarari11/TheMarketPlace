@@ -12,7 +12,7 @@ export class GetApiInfoService {
   APIcall: string = `https://finnhub.io/api/v1/company-news?symbol=${this.StockSymbol}&from=2021-03-01&to=2021-03-09&token=${this.APIkey}`;
   
   constructor(private infoServ: HttpClient) {   }
-  getNews(): Observable<any>{
+  getStockNews(): Observable<any>{
     return this.infoServ.get<any>(`https://finnhub.io/api/v1/company-news?symbol=${this.StockSymbol}&from=2021-03-01&to=2021-08-27&token=${this.APIkey}`);
   }
   
@@ -20,7 +20,11 @@ export class GetApiInfoService {
     return this.infoServ.get<any>(`https://finnhub.io/api/v1/stock/profile2?symbol=${this.StockSymbol}&token=${this.APIkey}`);
   }
 
-  getPrices(): Observable<any>{
+  getDeatils2(symbol: string): Observable<any>{
+    return this.infoServ.get<any>(`https://finnhub.io/api/v1/stock/profile2?symbol=${symbol}&token=${this.APIkey}`);
+  }
+
+  getStockPrices(): Observable<any>{
     return this.infoServ.get<any>(`https://finnhub.io/api/v1/quote?symbol=${this.StockSymbol}&token=${this.APIkey}`)
   } 
 }

@@ -4,7 +4,7 @@
 
 .container {
   width: 100%;
-  height: 100%;
+  height: auto;
   padding: 1rem 0;
 }
 .art {
@@ -38,23 +38,37 @@
       justify-content: center;
     }
     a {
-        color: black;
-        align-self: flex-start;
-        font-weight: bold;
-        margin-top: -20px;
-        padding-bottom: 10px;
-        text-decoration: underline;
+      color: black;
+      align-self: flex-start;
+      font-weight: bold;
+      margin-top: -20px;
+      padding-bottom: 10px;
+      text-decoration: underline;
     }
-    a:hover{
-        color: #4c5cbc;
+    a:hover {
+      color: #4c5cbc;
     }
   }
 }
-.search{
+.search {
   display: flex;
-  .form-control{
+  .form-control {
     width: 70%;
     color: black;
   }
+}
 
+.news {
+  width: 60%;
+  height: auto;
+  padding: 1rem 0;
+}
+
+.smallLogo {
+  height: 25px;
+}
+
+#newsAlert {
+  text-align: center;
+  font-size: x-large;
 }

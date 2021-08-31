@@ -6,6 +6,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ApexAxisChartSeries, ChartComponent } from 'ng-apexcharts';
 import { ChartOptions } from 'src/app/Interfaces/chart-options';
 import { GetApiInfoService } from 'src/app/Services/get-api-info.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-main',
@@ -14,6 +15,7 @@ import { GetApiInfoService } from 'src/app/Services/get-api-info.service';
 })
 export class MainComponent {
 
+  
   //? To draw the main chart
   @ViewChild('chart') chart: ChartComponent;
   chartOptions: Partial<ChartOptions>;
@@ -37,24 +39,72 @@ export class MainComponent {
   
   active: string = 'D'; //? Control the css of the dates (Day, Week, Month) on the chart
   
-  myDeatils: any;
+  stockDeatils: any;
+  myDeatils2: any = [];
   stockSearch: any = [];
+  stock1:number;
+  stock2:number;
+  stock3:number;
+  stock4:number;
   newsLimit: number = 3;
   myNews: any = [];
   prices: any;
+  searchForm: FormGroup;
+  updateStock: any;
 
   
-  constructor(private API_Info: GetApiInfoService) {
+  constructor(private API_Info: GetApiInfoService, private formBuilder: FormBuilder) {
     // The first buildup
     this.APIcall = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${this.StockSymbol}&outputsize=compact&interval=60min&apikey=${this.APIkey}`;
     this.fetchStock(this.APIcall, 'Time Series (Daily)');
     this.getDeatils();
-    this.getNews();
-    this.getPrices();
+    this.getDeatils2('TSLA','AAPL','GOOG','INTC');
+    this.getStockNews();
+    this.getStockPrices();
+    this.searchForm = this.formBuilder.group({
+      searchInput: '',
+    });
+    this.getCorrectPrice();
+  }
+
+  getCorrectPrice(){
+    let comp = this;
+    const socket = new WebSocket('wss://ws.finnhub.io?token=c4lv5h2ad3icjh0e8bmg');
+
+    // Connection opened -> Subscribe
+    socket.addEventListener('open', function (event) {
+
+        socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'AAPL'}))
+        socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'TSLA'}))
+        socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'GOOG'}))
+        socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'INTC'}))
+        // socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'BINANCE:BTCUSDT'}))
+    });
+
+    // Listen for messages
+    socket.addEventListener('message', function (event) {
+      comp.updateStock = JSON.parse(event.data);
+      comp.updateStock.data.forEach((element: any) => {
+        element.s == 'GOOG' ? comp.stock1 = element.p : null;
+        element.s == 'TSLA' ? comp.stock2 = element.p : null;
+        element.s == 'AAPL' ? comp.stock3 = element.p : null;
+        element.s == 'INTC' ? comp.stock4 = element.p : null;
+      });
+      console.log(comp.updateStock);
+
+        // console.log('Message from server ', event.data);
+    });
+
+    // Unsubscribe
+    var unsubscribe = function(symbol: any) {
+        socket.send(JSON.stringify({'type':'unsubscribe','symbol': symbol}))
+    }
   }
   
-  search(data: string){ //Get ${data}
-    fetch(`https://finnhub.io/api/v1/search?q=${data}&token=c4lv5h2ad3icjh0e8bmg`)
+  search(){ //Get ${data}
+    if (this.searchForm.valid) {
+
+    fetch(`https://finnhub.io/api/v1/search?q=${this.searchForm.controls['searchInput'].value}&token=c4lv5h2ad3icjh0e8bmg`)
     .then(
       (response) => {
         return response.json();
@@ -66,27 +116,47 @@ export class MainComponent {
           }
         }
       )
+    }
+     this.stockDeatils.name = this.searchForm.controls['searchInput'].value;
   }
  
-  getSearchStock(stock: string){
+  showChartOfSearchStock(stock: string){
     this.StockSymbolFromServ.splice(0, 1);
     this.StockSymbolFromServ.push(stock);
     this.StockSymbol = this.StockSymbolFromServ[0];
     this.APIcall = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${this.StockSymbol}&outputsize=compact&interval=60min&apikey=${this.APIkey}`;
     this.fetchStock(this.APIcall, 'Time Series (Daily)');
     this.getDeatils();
-    this.getNews();
-    this.getPrices();
+    this.getStockNews();
+    this.getStockPrices();
   }
 
-  getDeatils(){ // Get deatils from API2 and save it to ${myDeatils}
+  getDeatils(){ // Get deatils from API2 and save it to ${stockDeatils}
     this.API_Info.getDeatils().subscribe((res) => {
-      this.myDeatils = res; // Get company deatils
+      this.stockDeatils = res; // Get company deatils
     })
   }
-
-  getPrices(){ //^GSPC , ^NDX , ^DJI , ^OEX
-    this.API_Info.getPrices().subscribe(res => {
+  
+  async getDeatils2(symbol: string,symbol1: string,symbol2: string, symbol3: string){ // Get deatils from API2 and save it to ${stockDeatils}
+    await this.API_Info.getDeatils2(symbol).subscribe((res) => {
+      this.myDeatils2.push(res); // Get company deatils
+    })
+    await this.API_Info.getDeatils2(symbol1).subscribe((res) => {
+      this.myDeatils2.push(res); // Get company deatils
+    })
+    await this.API_Info.getDeatils2(symbol2).subscribe((res) => {
+      this.myDeatils2.push(res); // Get company deatils
+    })
+    await this.API_Info.getDeatils2(symbol3).subscribe((res) => {
+      this.myDeatils2.push(res); // Get company deatils
+      console.log(this.myDeatils2);
+      
+    })
+    
+  }
+  
+  getStockPrices(){ 
+    this.API_Info.getStockPrices().subscribe(res => {
       this.prices = res;
     })
   }
@@ -176,7 +246,7 @@ export class MainComponent {
         });
   }
 
-  setTime(Time: string){ // Change the time of chart range
+  setChartTime(Time: string){ // Change the time of chart range
     let tempAPI: string;
         console.log(Time);
 
@@ -204,8 +274,8 @@ export class MainComponent {
     }
   }
 
-  getNews(){
-    this.API_Info.getNews().subscribe((res) => {
+  getStockNews(){
+    this.API_Info.getStockNews().subscribe((res) => {
      let i = 1;
      this.myNews = [];
       res.forEach((element: any) => {
@@ -217,16 +287,16 @@ export class MainComponent {
 
   getMoreNews(){
    this.newsLimit = this.newsLimit + 5;
-    this.getNews();
+    this.getStockNews();
   }
 
   hideNews(){
     this.newsLimit != 3 ? this.newsLimit = this.newsLimit - 3 : '';
-    this.getNews();
+    this.getStockNews();
   }
 
   hideAllNews(){
    this.newsLimit = 3;
-    this.getNews();
+    this.getStockNews();
   }
 }
