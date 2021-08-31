@@ -1,3 +1,4 @@
+import { StockDetailsTwo } from '../models/stock-details-two';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -20,11 +21,24 @@ export class GetApiInfoService {
     return this.infoServ.get<any>(`https://finnhub.io/api/v1/stock/profile2?symbol=${this.StockSymbol}&token=${this.APIkey}`);
   }
 
-  getDeatils2(symbol: string): Observable<any>{
-    return this.infoServ.get<any>(`https://finnhub.io/api/v1/stock/profile2?symbol=${symbol}&token=${this.APIkey}`);
+  getDeatils2(symbol: string): Observable<StockDetailsTwo>{
+    return this.infoServ.get<StockDetailsTwo>(`https://finnhub.io/api/v1/stock/profile2?symbol=${symbol}&token=${this.APIkey}`);
   }
+
+  // getDeatils2(symbol: string): Promise<StockDetailsTwo>{
+  //   return new Promise((resolve, reject)=>{
+  //     this.infoServ.get<StockDetailsTwo>(`https://finnhub.io/api/v1/stock/profile2?symbol=${symbol}&token=${this.APIkey}`).subscribe(res=>{
+  //       resolve(res);
+  //     },
+  //     err=>{
+  //       reject(err);
+  //     });
+  //   });
+  // }
 
   getStockPrices(): Observable<any>{
     return this.infoServ.get<any>(`https://finnhub.io/api/v1/quote?symbol=${this.StockSymbol}&token=${this.APIkey}`)
   } 
 }
+
+//export class 

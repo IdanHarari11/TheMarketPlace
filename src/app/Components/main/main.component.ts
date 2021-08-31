@@ -14,8 +14,6 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent {
-
-  
   //? To draw the main chart
   @ViewChild('chart') chart: ChartComponent;
   chartOptions: Partial<ChartOptions>;
@@ -42,11 +40,12 @@ export class MainComponent {
   stockDeatils: any;
   myDeatils2: any = [];
   stockSearch: any = [];
-  stock1:number;
-  stock2:number;
-  stock3:number;
-  stock4:number;
-  newsLimit: number = 3;
+  priceCurrentStock: number;
+  priceStock1: number;
+  priceStock2: number;
+  priceStock3: number;
+  priceStock4: number;
+  newsLimit: number = 2;
   myNews: any = [];
   prices: any;
   searchForm: FormGroup;
@@ -73,24 +72,28 @@ export class MainComponent {
 
     // Connection opened -> Subscribe
     socket.addEventListener('open', function (event) {
-
-        socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'AAPL'}))
-        socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'TSLA'}))
+        socket.send(JSON.stringify({'type':'subscribe', 'symbol': comp.StockSymbol}))
         socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'GOOG'}))
-        socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'INTC'}))
-        // socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'BINANCE:BTCUSDT'}))
+        socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'TSLA'}))
+        socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'SPY'}))
+        // socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'INTC'}))
+        socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'BINANCE:BTCUSDT'}))
     });
 
     // Listen for messages
     socket.addEventListener('message', function (event) {
       comp.updateStock = JSON.parse(event.data);
-      comp.updateStock.data.forEach((element: any) => {
-        element.s == 'GOOG' ? comp.stock1 = element.p : null;
-        element.s == 'TSLA' ? comp.stock2 = element.p : null;
-        element.s == 'AAPL' ? comp.stock3 = element.p : null;
-        element.s == 'INTC' ? comp.stock4 = element.p : null;
-      });
-      console.log(comp.updateStock);
+      if(comp.updateStock.data)
+      {
+        comp.updateStock.data.forEach((element: any) => {
+          element.s == comp.StockSymbol ? comp.priceCurrentStock = element.p : null;
+          element.s == 'GOOG' ? comp.priceStock1 = element.p : null;
+          element.s == 'TSLA' ? comp.priceStock2 = element.p : null;
+          element.s == 'SPY' ? comp.priceStock3 = element.p : null;
+          element.s == 'BINANCE:BTCUSDT' ? comp.priceStock4 = element.p : null;
+        });
+      }
+      // console.log(comp.updateStock);
 
         // console.log('Message from server ', event.data);
     });
@@ -129,6 +132,7 @@ export class MainComponent {
     this.getDeatils();
     this.getStockNews();
     this.getStockPrices();
+    this.getCorrectPrice();
   }
 
   getDeatils(){ // Get deatils from API2 and save it to ${stockDeatils}
@@ -137,22 +141,29 @@ export class MainComponent {
     })
   }
   
-  async getDeatils2(symbol: string,symbol1: string,symbol2: string, symbol3: string){ // Get deatils from API2 and save it to ${stockDeatils}
-    await this.API_Info.getDeatils2(symbol).subscribe((res) => {
+  getDeatils2(symbol: string,symbol1: string,symbol2: string, symbol3: string){ // Get deatils from API2 and save it to ${stockDeatils}
+    // console.log("before getDetails2");
+    // var getDetails2 = await this.API_Info.getDeatils2(symbol);
+    // console.log(getDetails2, "after getDetails2");
+    
+    this.API_Info.getDeatils2(symbol).subscribe((res) => {
+      console.log(res)
       this.myDeatils2.push(res); // Get company deatils
+      console.log("http 1");
     })
-    await this.API_Info.getDeatils2(symbol1).subscribe((res) => {
+    this.API_Info.getDeatils2(symbol1).subscribe((res) => {
       this.myDeatils2.push(res); // Get company deatils
+      console.log("http 2");
     })
-    await this.API_Info.getDeatils2(symbol2).subscribe((res) => {
+    this.API_Info.getDeatils2(symbol2).subscribe((res) => {
       this.myDeatils2.push(res); // Get company deatils
+      console.log("http 3");
     })
-    await this.API_Info.getDeatils2(symbol3).subscribe((res) => {
+    this.API_Info.getDeatils2(symbol3).subscribe((res) => {
       this.myDeatils2.push(res); // Get company deatils
       console.log(this.myDeatils2);
-      
-    })
-    
+      console.log("http 4");
+    })  
   }
   
   getStockPrices(){ 

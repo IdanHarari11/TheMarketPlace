@@ -8,12 +8,14 @@
             <div class="row">
               <div class="col">
                 <h5 class="card-title text-uppercase text-muted mb-0">
-                  <a href="https://abc.xyz/" target="_blank">
+                  <a class="atag" href="https://abc.xyz/" target="_blank">
                     Alphabet Inc. (GOOG)
                   </a>
                 </h5>
-                <span class="h2 font-weight-bold mb-0"  *ngIf="stock1; else elseBlock1"
-                  >{{ stock1 }}$</span
+                <span
+                  class="h2 font-weight-bold mb-0"
+                  *ngIf="priceStock1; else elseBlock1"
+                  >{{ priceStock1 }}$</span
                 >
                 <ng-template #elseBlock1>...</ng-template>
               </div>
@@ -42,12 +44,14 @@
             <div class="row">
               <div class="col">
                 <h5 class="card-title text-uppercase text-muted mb-0">
-                  <a href="https://www.tesla.com/" target="_blank">
+                  <a class="atag" href="https://www.tesla.com/" target="_blank">
                     Tesla Inc. (TSLA)
                   </a>
                 </h5>
-                <span class="h2 font-weight-bold mb-0"  *ngIf="stock2; else elseBlock2"
-                  >{{ stock2 }}$</span
+                <span
+                  class="h2 font-weight-bold mb-0"
+                  *ngIf="priceStock2; else elseBlock2"
+                  >{{ priceStock2 }}$</span
                 >
                 <ng-template #elseBlock2>...</ng-template>
               </div>
@@ -76,18 +80,26 @@
             <div class="row">
               <div class="col">
                 <h5 class="card-title text-uppercase text-muted mb-0">
-                  <a href="https://www.apple.com/" target="_blank">
-                    Apple Inc. (AAPL)
+                  <a
+                    class="atag"
+                    href="https://www.zacks.com/funds/etf/SPY/holding"
+                    target="_blank"
+                  >
+                    SPDR S&P 500 ETF Trust (SPY)
                   </a>
                 </h5>
-                <span class="h2 font-weight-bold mb-0" *ngIf="stock3; else elseBlock3">{{ stock3 }}$</span
+                <span
+                  class="h2 font-weight-bold mb-0"
+                  *ngIf="priceStock3; else elseBlock3"
+                  >{{ priceStock3 }}$</span
                 >
                 <ng-template #elseBlock3>...</ng-template>
               </div>
               <div class="col-auto">
                 <img
-                  src="https://finnhub.io/api/logo?symbol=AAPL  "
-                  alt="Alphabet Inc. logo"
+                  style="height: 50px; margin-top: -10px"
+                  src="https://easyportfol.io/blog/spx/thumb.svg"
+                  alt="S&P500 logo"
                   class="smallLogo"
                 />
               </div>
@@ -109,19 +121,25 @@
             <div class="row">
               <div class="col">
                 <h5 class="card-title text-uppercase text-muted mb-0">
-                  <a href="https://www.intel.com/" target="_blank">
-                    Intel Corp. (INTC)
+                  <a
+                    class="atag"
+                    href="https://bitcoin.org/en/"
+                    target="_blank"
+                  >
+                    Bitcoin USD (BTC-USD)
                   </a>
                 </h5>
-                <span class="h2 font-weight-bold mb-0"  *ngIf="stock4; else elseBlock4"
-                  >{{ stock4 }}$</span
+                <span
+                  class="h2 font-weight-bold mb-0"
+                  *ngIf="priceStock4; else elseBlock4"
+                  >{{ priceStock4 }}$</span
                 >
                 <ng-template #elseBlock4>...</ng-template>
               </div>
               <div class="col-auto">
                 <img
-                  src="https://finnhub.io/api/logo?symbol=INTC"
-                  alt="Intel Corp logo"
+                  src="https://bitcoin.org/img/icons/logotop.svg?1630339663"
+                  alt="Bitcoin logo"
                   class="smallLogo"
                 />
               </div>
@@ -154,18 +172,18 @@
               />
               <!-- <h6 class="text-light text-uppercase ls-1 mb-1">Overview</h6> -->
               <h5 class="h3 text-white mb-0">{{ StockSymbol }}</h5>
-              <span class="text-primary mr-2">{{ prices?.c }}</span>
-              <span [ngClass]="prices?.dp > 0 ? 'text-success' : 'text-danger'"
-                ><i
-                  [ngClass]="
-                    prices?.dp > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down'
-                  "
-                ></i>
-                {{ prices?.dp }}%</span
-              >
-              <span class="ml-1"
-                >(<span *ngIf="prices?.d > 0">+</span>{{ prices?.d }})</span
-              >
+              
+              <!-- ! If the  -->
+              <span class="text-primary mr-2" *ngIf="priceCurrentStock">{{ priceCurrentStock }}</span>
+              
+              <span *ngIf="!priceCurrentStock" class="text-primary mr-2">{{ prices?.c }}</span>
+              
+              <span [ngClass]="prices?.dp > 0 ? 'text-success' : 'text-danger'">
+                <i [ngClass]="prices?.dp > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>{{ prices?.dp }}%</span>
+
+                
+              <!-- <span class="ml-1" *ngIf="priceCurrentStock">(<span *ngIf="(priceCurrentStock-prices.c) > 0">+</span>{{ priceCurrentStock-prices.c }})</span> -->
+              <span class="ml-1" >(<span *ngIf="prices?.d > 0">+</span>{{ prices?.d }})</span>
             </div>
             <div class="col">
               <ul class="nav nav-pills justify-content-end">
@@ -289,16 +307,16 @@
       </div>
     </div>
     <div class="card-body"> -->
-      <!-- Chart2 -->
-      <!-- <div class="chart" id="chartB"></div>
+<!-- Chart2 -->
+<!-- <div class="chart" id="chartB"></div>
     </div>
   </div>
 </div> -->
 
 <!-- ! News -->
 <div class="alert alert-primary" role="alert">
-  <i class="ni ni-bell-55" style="size: 50px;"></i>&nbsp;
-    <strong id="newsAlert">News!</strong>
+  <i class="ni ni-bell-55" style="size: 50px"></i>&nbsp;
+  <strong id="newsAlert">News!</strong>
 </div>
 <div class="container news">
   <div class="art" *ngFor="let news of myNews; let i = index">

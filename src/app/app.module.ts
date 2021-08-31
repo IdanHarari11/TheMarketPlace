@@ -4,12 +4,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { NewsComponent } from './Components/news/news.component';
 import { MainComponent } from './Components/main/main.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AppComponent, NewsComponent, MainComponent],
+  declarations: [AppComponent, MainComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
