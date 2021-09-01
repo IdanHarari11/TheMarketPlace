@@ -55,6 +55,10 @@ export class MainComponent {
   constructor(private API_Info: GetApiInfoService, private formBuilder: FormBuilder) {
     // The first buildup
     this.APIcall = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${this.StockSymbol}&outputsize=compact&interval=60min&apikey=${this.APIkey}`;
+    this.init();
+  }
+
+  init(){
     this.fetchStock(this.APIcall, 'Time Series (Daily)');
     this.getDeatils();
     this.getDeatils2('TSLA','AAPL','GOOG','INTC');
@@ -147,22 +151,16 @@ export class MainComponent {
     // console.log(getDetails2, "after getDetails2");
     
     this.API_Info.getDeatils2(symbol).subscribe((res) => {
-      console.log(res)
       this.myDeatils2.push(res); // Get company deatils
-      console.log("http 1");
     })
     this.API_Info.getDeatils2(symbol1).subscribe((res) => {
       this.myDeatils2.push(res); // Get company deatils
-      console.log("http 2");
     })
     this.API_Info.getDeatils2(symbol2).subscribe((res) => {
       this.myDeatils2.push(res); // Get company deatils
-      console.log("http 3");
     })
     this.API_Info.getDeatils2(symbol3).subscribe((res) => {
       this.myDeatils2.push(res); // Get company deatils
-      console.log(this.myDeatils2);
-      console.log("http 4");
     })  
   }
   
@@ -183,7 +181,6 @@ export class MainComponent {
         }
       ).then(
         (data) => {
-          console.log(data);
 
           let stockChartXValues: string[] = [];
           let stockChartOpenValues: string[] = [];
