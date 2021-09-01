@@ -193,7 +193,7 @@
               <span class="text-primary mr-2" *ngIf="priceCurrentStock">{{
                 priceCurrentStock
               }}</span>
-              <span
+              <span class="widh"
                 *ngIf="priceCurrentStock"
                 [ngClass]="
                   priceCurrentStock - prices?.pc > 0
@@ -208,16 +208,18 @@
                       : 'fa fa-arrow-down'
                   "
                 ></i
-                >{{ (priceCurrentStock - prices?.pc) / 100 }}%
+                >{{ ((priceCurrentStock - prices?.pc)/priceCurrentStock)*100 }}%
+                <br>
               </span>
-              <span class="ml-1" *ngIf="priceCurrentStock">
+              <span class="ml-1 widh" *ngIf="priceCurrentStock">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 (<span *ngIf="priceCurrentStock - prices?.pc > 0">+</span>
                 {{ priceCurrentStock - prices?.pc }})
               </span>
 
               <!-- ! If *not* have currect price -->
               <span *ngIf="!priceCurrentStock" class="text-primary mr-2">{{
-                prices?.o
+                prices?.c
               }}</span>
               <span
                 *ngIf="!priceCurrentStock"
@@ -335,7 +337,7 @@
                   badge badge-md badge-circle badge-floating badge-secondary
                   border-white
                 "
-                >~</span
+                >@</span
               >
             </button>
           </div>
