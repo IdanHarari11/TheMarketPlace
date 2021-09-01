@@ -1,4 +1,4 @@
-export class StockDetailsTwo
+export class StockDetails
 {
     country: string;
     currency:string;

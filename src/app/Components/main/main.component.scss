@@ -72,3 +72,22 @@
   text-align: center;
   font-size: x-large;
 }
+
+.btnSearchRes{
+  background-color: #1d3661;
+  color: white;
+  font-size: small;
+}
+
+.btnSearchRes:hover{
+  background-color: #5e72e4;
+}
+
+.searchRes:first-child{
+  color: #5e72e4;
+}
+
+.cardBody{
+  min-height: 175px;
+}
+

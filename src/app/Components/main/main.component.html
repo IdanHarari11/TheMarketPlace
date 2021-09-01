@@ -4,7 +4,7 @@
       <div class="col-xl-3 col-md-6">
         <div class="card card-stats">
           <!-- Card body -->
-          <div class="card-body">
+          <div class="card-body cardBody">
             <div class="row">
               <div class="col">
                 <h5 class="card-title text-uppercase text-muted mb-0">
@@ -17,7 +17,11 @@
                   *ngIf="priceStock1; else elseBlock1"
                   >{{ priceStock1 }}$</span
                 >
-                <ng-template #elseBlock1>...</ng-template>
+                <ng-template #elseBlock1
+                  ><div style="font-size: 9px; margin-top: 8px">
+                    No trades in this symbol right now...
+                  </div></ng-template
+                >
               </div>
               <div class="col-auto">
                 <img
@@ -40,7 +44,7 @@
       <div class="col-xl-3 col-md-6">
         <div class="card card-stats">
           <!-- Card body -->
-          <div class="card-body">
+          <div class="card-body cardBody">
             <div class="row">
               <div class="col">
                 <h5 class="card-title text-uppercase text-muted mb-0">
@@ -53,7 +57,11 @@
                   *ngIf="priceStock2; else elseBlock2"
                   >{{ priceStock2 }}$</span
                 >
-                <ng-template #elseBlock2>...</ng-template>
+                <ng-template #elseBlock2
+                  ><div style="font-size: 9px; margin-top: 8px">
+                    No trades in this symbol right now...
+                  </div></ng-template
+                >
               </div>
               <div class="col-auto">
                 <img
@@ -76,7 +84,7 @@
       <div class="col-xl-3 col-md-6">
         <div class="card card-stats">
           <!-- Card body -->
-          <div class="card-body">
+          <div class="card-body cardBody">
             <div class="row">
               <div class="col">
                 <h5 class="card-title text-uppercase text-muted mb-0">
@@ -93,7 +101,11 @@
                   *ngIf="priceStock3; else elseBlock3"
                   >{{ priceStock3 }}$</span
                 >
-                <ng-template #elseBlock3>...</ng-template>
+                <ng-template #elseBlock3
+                  ><div style="font-size: 9px; margin-top: 8px">
+                    No trades in this symbol right now...
+                  </div></ng-template
+                >
               </div>
               <div class="col-auto">
                 <img
@@ -117,7 +129,7 @@
       <div class="col-xl-3 col-md-6">
         <div class="card card-stats">
           <!-- Card body -->
-          <div class="card-body">
+          <div class="card-body cardBody">
             <div class="row">
               <div class="col">
                 <h5 class="card-title text-uppercase text-muted mb-0">
@@ -134,7 +146,11 @@
                   *ngIf="priceStock4; else elseBlock4"
                   >{{ priceStock4 }}$</span
                 >
-                <ng-template #elseBlock4>...</ng-template>
+                <ng-template #elseBlock4
+                  ><div style="font-size: 9px; margin-top: 8px">
+                    No trades in this symbol right now...
+                  </div></ng-template
+                >
               </div>
               <div class="col-auto">
                 <img
@@ -166,24 +182,57 @@
           <div class="row align-items-center">
             <div class="col">
               <img
-                [src]="stockDeatils?.logo || ''"
+                [src]="stockDetails?.logo || ''"
                 class="text-uppercase text-muted ls-1 mb-1"
                 style="max-height: 25px"
               />
               <!-- <h6 class="text-light text-uppercase ls-1 mb-1">Overview</h6> -->
               <h5 class="h3 text-white mb-0">{{ StockSymbol }}</h5>
-              
-              <!-- ! If the  -->
-              <span class="text-primary mr-2" *ngIf="priceCurrentStock">{{ priceCurrentStock }}</span>
-              
-              <span *ngIf="!priceCurrentStock" class="text-primary mr-2">{{ prices?.c }}</span>
-              
-              <span [ngClass]="prices?.dp > 0 ? 'text-success' : 'text-danger'">
-                <i [ngClass]="prices?.dp > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>{{ prices?.dp }}%</span>
 
-                
-              <!-- <span class="ml-1" *ngIf="priceCurrentStock">(<span *ngIf="(priceCurrentStock-prices.c) > 0">+</span>{{ priceCurrentStock-prices.c }})</span> -->
-              <span class="ml-1" >(<span *ngIf="prices?.d > 0">+</span>{{ prices?.d }})</span>
+              <!-- ! If have currect price (live price)  -->
+              <span class="text-primary mr-2" *ngIf="priceCurrentStock">{{
+                priceCurrentStock
+              }}</span>
+              <span
+                *ngIf="priceCurrentStock"
+                [ngClass]="
+                  priceCurrentStock - prices?.pc > 0
+                    ? 'text-success'
+                    : 'text-danger'
+                "
+              >
+                <i
+                  [ngClass]="
+                    priceCurrentStock - prices?.pc > 0
+                      ? 'fa fa-arrow-up'
+                      : 'fa fa-arrow-down'
+                  "
+                ></i
+                >{{ (priceCurrentStock - prices?.pc) / 100 }}%
+              </span>
+              <span class="ml-1" *ngIf="priceCurrentStock">
+                (<span *ngIf="priceCurrentStock - prices?.pc > 0">+</span>
+                {{ priceCurrentStock - prices?.pc }})
+              </span>
+
+              <!-- ! If *not* have currect price -->
+              <span *ngIf="!priceCurrentStock" class="text-primary mr-2">{{
+                prices?.o
+              }}</span>
+              <span
+                *ngIf="!priceCurrentStock"
+                [ngClass]="prices?.dp > 0 ? 'text-success' : 'text-danger'"
+              >
+                <i
+                  [ngClass]="
+                    prices?.dp > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down'
+                  "
+                ></i
+                >{{ prices?.dp }}%
+              </span>
+              <span class="ml-1" *ngIf="!priceCurrentStock">
+                (<span *ngIf="prices?.d > 0">+</span> {{ prices?.d }})
+              </span>
             </div>
             <div class="col">
               <ul class="nav nav-pills justify-content-end">
@@ -261,7 +310,7 @@
                   class="form-control mr-2"
                   type="text"
                   formControlName="searchInput"
-                  [placeholder]="stockDeatils?.name"
+                  placeholder="Search stock .."
                   style="border: 2px solid black"
                 />
                 <button type="submit" class="btn btn-outline-primary">
@@ -272,46 +321,29 @@
           </div>
         </div>
         <div class="card-body" style="min-height: 423px">
-          <div *ngFor="let stock of stockSearch">
-            <span
-              class="badge badge-pill badge-default cursor-pointer"
+          <div class="searchRes" *ngFor="let stock of stockSearch">
+            <button
+              type="button"
+              class="btn m-2 w-100 btnSearchRes"
               (click)="showChartOfSearchStock(stock.symbol)"
-              >{{ stock.symbol }}</span
             >
+              <span class="float-left">{{ stock.symbol }} -</span>
+              <span class="float-left ml-2">{{ stock.description }}</span>
+              <span
+                class="
+                  float-right
+                  badge badge-md badge-circle badge-floating badge-secondary
+                  border-white
+                "
+                >~</span
+              >
+            </button>
           </div>
         </div>
       </div>
     </form>
   </div>
 </div>
-
-<!-- ! Chart2 (statistic)  -->
-<!-- <div class="col-xl-12">
-  <div class="card">
-    <div class="card-header bg-transparent">
-      <div class="row align-items-center">
-        <div class="col" style="display: flex">
-          <div
-            class="
-              icon icon-shape
-              bg-gradient-orange
-              text-white
-              rounded-circle
-              shadow
-            "
-          >
-            <i class="ni ni-chart-pie-35"></i>
-          </div>
-          <h5 class="h3 mb-0 ml-2 mt-2">{{ stockDeatils?.name || "" }}</h5>
-        </div>
-      </div>
-    </div>
-    <div class="card-body"> -->
-<!-- Chart2 -->
-<!-- <div class="chart" id="chartB"></div>
-    </div>
-  </div>
-</div> -->
 
 <!-- ! News -->
 <div class="alert alert-primary" role="alert">
@@ -320,7 +352,11 @@
 </div>
 <div class="container news">
   <div class="art" *ngFor="let news of myNews; let i = index">
-    <img class="img-top" [src]="news.image" alt="image cap" />
+    <img
+      class="img-top"
+      [src]="news.image || stockDetails?.logo"
+      alt="image cap"
+    />
     <div class="body">
       <a [href]="news.url" target="_blank" class="title">{{ news.headline }}</a>
       <p class="text ptag">{{ news.summary }}</p>

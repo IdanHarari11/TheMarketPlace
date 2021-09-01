@@ -7,6 +7,10 @@ import { ApexAxisChartSeries, ChartComponent } from 'ng-apexcharts';
 import { ChartOptions } from 'src/app/Interfaces/chart-options';
 import { GetApiInfoService } from 'src/app/Services/get-api-info.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { StockDetails } from 'src/app/models/stock-details';
+import { StockSearch } from 'src/app/models/stock-search';
+import { News } from 'src/app/models/news';
+import { UpdateStock } from 'src/app/models/update-stock';
 
 @Component({
   selector: 'app-main',
@@ -37,19 +41,19 @@ export class MainComponent {
   
   active: string = 'D'; //? Control the css of the dates (Day, Week, Month) on the chart
   
-  stockDeatils: any;
-  myDeatils2: any = [];
-  stockSearch: any = [];
+  stockDetails: StockDetails;
+  myDetails2: StockDetails[] = [];
+  stockSearch: StockSearch[] = [];
   priceCurrentStock: number;
   priceStock1: number;
   priceStock2: number;
   priceStock3: number;
   priceStock4: number;
-  newsLimit: number = 2;
-  myNews: any = [];
+  newsLimit: number = 3;
+  myNews: News[] = [];
   prices: any;
   searchForm: FormGroup;
-  updateStock: any;
+  updateStock: UpdateStock;
 
   
   constructor(private API_Info: GetApiInfoService, private formBuilder: FormBuilder) {
@@ -60,8 +64,8 @@ export class MainComponent {
 
   init(){
     this.fetchStock(this.APIcall, 'Time Series (Daily)');
-    this.getDeatils();
-    this.getDeatils2('TSLA','AAPL','GOOG','INTC');
+    this.getDetails();
+    this.getDetails2('TSLA','AAPL','GOOG','INTC');
     this.getStockNews();
     this.getStockPrices();
     this.searchForm = this.formBuilder.group({
@@ -80,7 +84,6 @@ export class MainComponent {
         socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'GOOG'}))
         socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'TSLA'}))
         socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'SPY'}))
-        // socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'INTC'}))
         socket.send(JSON.stringify({'type':'subscribe', 'symbol': 'BINANCE:BTCUSDT'}))
     });
 
@@ -97,13 +100,10 @@ export class MainComponent {
           element.s == 'BINANCE:BTCUSDT' ? comp.priceStock4 = element.p : null;
         });
       }
-      // console.log(comp.updateStock);
-
-        // console.log('Message from server ', event.data);
     });
 
     // Unsubscribe
-    var unsubscribe = function(symbol: any) {
+    var unsubscribe = function(symbol: string) {
         socket.send(JSON.stringify({'type':'unsubscribe','symbol': symbol}))
     }
   }
@@ -124,7 +124,8 @@ export class MainComponent {
         }
       )
     }
-     this.stockDeatils.name = this.searchForm.controls['searchInput'].value;
+    this.hideAllNews();
+    this.stockDetails.name = this.searchForm.controls['searchInput'].value;
   }
  
   showChartOfSearchStock(stock: string){
@@ -133,34 +134,30 @@ export class MainComponent {
     this.StockSymbol = this.StockSymbolFromServ[0];
     this.APIcall = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${this.StockSymbol}&outputsize=compact&interval=60min&apikey=${this.APIkey}`;
     this.fetchStock(this.APIcall, 'Time Series (Daily)');
-    this.getDeatils();
+    this.getDetails();
     this.getStockNews();
     this.getStockPrices();
     this.getCorrectPrice();
   }
 
-  getDeatils(){ // Get deatils from API2 and save it to ${stockDeatils}
-    this.API_Info.getDeatils().subscribe((res) => {
-      this.stockDeatils = res; // Get company deatils
+  getDetails(){ // Get details from API2 and save it to ${stockDetails}
+    this.API_Info.getDetails().subscribe((res) => {
+      this.stockDetails = res; // Get company details
     })
   }
   
-  getDeatils2(symbol: string,symbol1: string,symbol2: string, symbol3: string){ // Get deatils from API2 and save it to ${stockDeatils}
-    // console.log("before getDetails2");
-    // var getDetails2 = await this.API_Info.getDeatils2(symbol);
-    // console.log(getDetails2, "after getDetails2");
-    
-    this.API_Info.getDeatils2(symbol).subscribe((res) => {
-      this.myDeatils2.push(res); // Get company deatils
+  getDetails2(symbol: string,symbol1: string,symbol2: string, symbol3: string){ // Get details from API2 and save it to ${stockDetails}
+    this.API_Info.getDetails2(symbol).subscribe((res) => {
+      this.myDetails2.push(res); // Get company details
     })
-    this.API_Info.getDeatils2(symbol1).subscribe((res) => {
-      this.myDeatils2.push(res); // Get company deatils
+    this.API_Info.getDetails2(symbol1).subscribe((res) => {
+      this.myDetails2.push(res); // Get company details
     })
-    this.API_Info.getDeatils2(symbol2).subscribe((res) => {
-      this.myDeatils2.push(res); // Get company deatils
+    this.API_Info.getDetails2(symbol2).subscribe((res) => {
+      this.myDetails2.push(res); // Get company details
     })
-    this.API_Info.getDeatils2(symbol3).subscribe((res) => {
-      this.myDeatils2.push(res); // Get company deatils
+    this.API_Info.getDetails2(symbol3).subscribe((res) => {
+      this.myDetails2.push(res); // Get company details
     })  
   }
   
@@ -172,7 +169,6 @@ export class MainComponent {
 
   fetchStock(URL: string, Time: string) {  // Get ${StockSymbol} and get data from API1
     var comp = this;
-    
   
     fetch(URL)
       .then(
@@ -197,7 +193,6 @@ export class MainComponent {
             stockChartLowValues.push(data[Time][key]["3. low"]); //? The low prices
             stockChartCloseValues.push(data[Time][key]["4. close"]); //? The close prices
           }
-          // console.log(stockChartXValues);
 
           for (var i = 0; i < stockChartXValues.length; i++){
             comp.xy = {x: stockChartXValues[i], y: [stockChartCloseValues[i], stockChartHighValues[i], stockChartLowValues[i], stockChartOpenValues[i],]}
@@ -206,8 +201,8 @@ export class MainComponent {
           return comp.arrXY;
         }
         ).then( () => {
-        // console.log(comp.arrXY);
-        
+        console.log(comp.arrXY);
+
         comp.series = [
                           {
                             name: 'candle',
@@ -256,7 +251,6 @@ export class MainComponent {
 
   setChartTime(Time: string){ // Change the time of chart range
     let tempAPI: string;
-        console.log(Time);
 
     switch (Time) {
       case 'Day':
@@ -286,7 +280,7 @@ export class MainComponent {
     this.API_Info.getStockNews().subscribe((res) => {
      let i = 1;
      this.myNews = [];
-      res.forEach((element: any) => {
+      res.forEach((element: News) => {
         i <= this.newsLimit ? this.myNews.push(element) : '';
         i++;
       });
@@ -299,12 +293,13 @@ export class MainComponent {
   }
 
   hideNews(){
-    this.newsLimit != 3 ? this.newsLimit = this.newsLimit - 3 : '';
+    this.newsLimit != 3 ? this.newsLimit = this.newsLimit - 5 : '';
     this.getStockNews();
   }
 
   hideAllNews(){
-   this.newsLimit = 3;
+    this.newsLimit = 3;
     this.getStockNews();
   }
+  
 }
