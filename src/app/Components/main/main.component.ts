@@ -65,7 +65,6 @@ export class MainComponent {
   init(){
     this.fetchStock(this.APIcall, 'Time Series (Daily)');
     this.getDetails();
-    // this.getDetails2('TSLA','AAPL','GOOG','INTC');
     this.getStockNews();
     this.getStockPrices();
     this.searchForm = this.formBuilder.group({
@@ -143,25 +142,8 @@ export class MainComponent {
   getDetails(){ // Get details from API2 and save it to ${stockDetails} - symbol, name, logo, url
     this.API_Info.getDetails().subscribe((res) => {
       this.stockDetails = res; // Get company details
-      console.log(this.stockDetails);
-      
     })
   }
-  
-  // getDetails2(symbol: string,symbol1: string,symbol2: string, symbol3: string){ 
-  //   this.API_Info.getDetails2(symbol).subscribe((res) => {
-  //     this.myDetails2.push(res); // Get company details
-  //   })
-  //   this.API_Info.getDetails2(symbol1).subscribe((res) => {
-  //     this.myDetails2.push(res); // Get company details
-  //   })
-  //   this.API_Info.getDetails2(symbol2).subscribe((res) => {
-  //     this.myDetails2.push(res); // Get company details
-  //   })
-  //   this.API_Info.getDetails2(symbol3).subscribe((res) => {
-  //     this.myDetails2.push(res); // Get company details
-  //   })  
-  // }
   
   getStockPrices(){ 
     this.API_Info.getStockPrices().subscribe(res => {
@@ -203,7 +185,6 @@ export class MainComponent {
           return comp.arrXY;
         }
         ).then( () => {
-        console.log(comp.arrXY);
 
         comp.series = [
                           {
