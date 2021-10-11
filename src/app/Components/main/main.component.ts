@@ -54,6 +54,10 @@ export class MainComponent {
   prices: any;
   searchForm: FormGroup;
   updateStock: UpdateStock;
+  teslaStock: any;
+  googleStock: any;
+  spyStock: any;
+  btcStock: any;
 
   
   constructor(private API_Info: GetApiInfoService, private formBuilder: FormBuilder) {
@@ -71,6 +75,7 @@ export class MainComponent {
       searchInput: '',
     });
     this.getCorrectPrice();
+    // this.buildHighlightStocks()
   }
 
   getCorrectPrice(){
@@ -106,6 +111,22 @@ export class MainComponent {
         socket.send(JSON.stringify({'type':'unsubscribe','symbol': symbol}))
     }
   }
+
+  // buildHighlightStocks(){
+  //   const highlightStocks = ['GOOGL','TSLA','SPY', 'BINANCE:BTCUSDT']
+  //   highlightStocks.forEach(stock => {
+  //     this.API_Info.getDetails2(stock).subscribe((res)=>{
+  //       switch (stock) {
+  //         case 'TSLA':
+  //           this.teslaStock.push()
+  //         break;
+        
+  //         default:
+  //           break;
+  //       }
+  //     })
+  //   });
+  // }
   
   search(){ //Get ${data}
     if (this.searchForm.valid) {
@@ -275,10 +296,6 @@ export class MainComponent {
     this.getStockNews();
   }
 
-  hideNews(){
-    this.newsLimit != 5 ? this.newsLimit = this.newsLimit - 5 : '';
-    this.getStockNews();
-  }
 
   hideAllNews(){
     this.newsLimit = 3;

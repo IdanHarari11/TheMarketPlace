@@ -1,6 +1,7 @@
 <div class="header bg-primary pb-6 pt-4">
   <div class="container-fluid">
     <div class="row">
+
       <div class="col-xl-3 col-md-6">
         <div class="card card-stats">
           <!-- Card body -->
@@ -31,12 +32,12 @@
                 />
               </div>
             </div>
-            <p class="mt-3 mb-0 text-sm">
+            <!-- <p class="mt-3 mb-0 text-sm">
               <span class="text-success mr-2"
-                ><i class="fa fa-arrow-up"></i> 3.48%</span
-              >
+                ><i class="fa fa-arrow-up"></i> 3.48%</span>
               <span class="text-nowrap">Since last month</span>
-            </p>
+            </p> -->
+            <span *ngIf="priceStock1;" class="text-success text-nowrap">Real time price!</span>
           </div>
         </div>
       </div>
@@ -71,12 +72,13 @@
                 />
               </div>
             </div>
-            <p class="mt-3 mb-0 text-sm">
+            <!-- <p class="mt-3 mb-0 text-sm">
               <span class="text-success mr-2"
                 ><i class="fa fa-arrow-up"></i> 3.48%</span
               >
               <span class="text-nowrap">Since last month</span>
-            </p>
+            </p> -->
+            <span *ngIf="priceStock2;" class="text-success text-nowrap">Real time price!</span>
           </div>
         </div>
       </div>
@@ -116,12 +118,13 @@
                 />
               </div>
             </div>
-            <p class="mt-3 mb-0 text-sm">
+            <!-- <p class="mt-3 mb-0 text-sm">
               <span class="text-success mr-2"
                 ><i class="fa fa-arrow-up"></i> 3.48%</span
               >
               <span class="text-nowrap">Since last month</span>
-            </p>
+            </p> -->
+            <span *ngIf="priceStock3;" class="text-success text-nowrap">Real time price!</span>
           </div>
         </div>
       </div>
@@ -160,12 +163,13 @@
                 />
               </div>
             </div>
-            <p class="mt-3 mb-0 text-sm">
+            <!-- <p class="mt-3 mb-0 text-sm">
               <span class="text-success mr-2"
                 ><i class="fa fa-arrow-up"></i> 3.48%</span
               >
               <span class="text-nowrap">Since last month</span>
-            </p>
+            </p> -->
+            <span *ngIf="priceStock4;" class="text-success text-nowrap">Real time price!</span>
           </div>
         </div>
       </div>
@@ -349,11 +353,25 @@
 
 <!-- ! News -->
 <div class="alert alert-primary" role="alert">
-  <i class="ni ni-bell-55" style="size: 50px"></i>&nbsp;
+  <!-- <i class="ni ni-bell-55" style="size: 50px"></i>&nbsp; -->
+  
   <strong id="newsAlert">News!</strong>
 </div>
 <div class="container news">
-  <div class="art" *ngFor="let news of myNews; let i = index">
+  
+  <div class="containerNews">
+
+    <div class="card" *ngFor="let news of myNews; let i = index">
+      <img class="card-img-top" [src]="news.image || stockDetails?.logo" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{ news.headline }}</h5>
+        <p class="card-text">{{ news.summary }}</p>
+      </div>
+    </div>
+
+  </div>
+  
+  <!-- <div class="art" *ngFor="let news of myNews; let i = index"> 
     <img
       class="img-top"
       [src]="news.image || stockDetails?.logo"
@@ -363,7 +381,7 @@
       <a [href]="news.url" target="_blank" class="title">{{ news.headline }}</a>
       <p class="text ptag">{{ news.summary }}</p>
     </div>
-  </div>
+  </div> -->
   <button
     type="button"
     class="btn btn-outline-default btn-lg btn-block"
@@ -376,17 +394,9 @@
       type="button"
       class="btn btn-outline-default btn-lg btn-block"
       style="margin-top: 10px"
-      (click)="hideNews()"
-    >
-      Hide
-    </button>
-    <button
-      type="button"
-      class="btn btn-outline-default btn-lg btn-block"
-      style="margin-top: 10px"
       (click)="hideAllNews()"
     >
-      Hide All
+      Hide
     </button>
   </div>
 </div>

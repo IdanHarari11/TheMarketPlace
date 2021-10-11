@@ -11,10 +11,11 @@ import { Observable } from 'rxjs';
 export class GetApiInfoService {
   StockSymbol: string[] = ['MSFT'];
   APIkey: string = 'c4lv5h2ad3icjh0e8bmg';
-  
+  // `https://finnhub.io/api/v1/stock/profile2?symbol=MSFT&token=c4lv5h2ad3icjh0e8bmg`
+
   constructor(private infoServ: HttpClient) {   }
   getStockNews(): Observable<News[]>{
-    return this.infoServ.get<News[]>(`https://finnhub.io/api/v1/company-news?symbol=${this.StockSymbol}&from=2021-03-01&to=2021-08-27&token=${this.APIkey}`);
+    return this.infoServ.get<News[]>(`https://finnhub.io/api/v1/company-news?symbol=${this.StockSymbol}&from=2021-03-01&to=2021-08-27&token=${this.APIkey}`)
   }
   
   getDetails(): Observable<StockDetails>{
@@ -36,7 +37,7 @@ export class GetApiInfoService {
   //   });
   // }
 
-  getStockPrices(): Observable<any>{
-    return this.infoServ.get<any>(`https://finnhub.io/api/v1/quote?symbol=${this.StockSymbol}&token=${this.APIkey}`)
+  getStockPrices(): Observable<number>{
+    return this.infoServ.get<number>(`https://finnhub.io/api/v1/quote?symbol=${this.StockSymbol}&token=${this.APIkey}`)
   } 
 }

@@ -1,7 +1,5 @@
-import { ChartOptions } from './Interfaces/chart-options';
-import { Component, ViewChild } from '@angular/core';
-
-import { ChartComponent, ApexAxisChartSeries, ApexChart, ApexYAxis, ApexXAxis, ApexTitleSubtitle } from 'ng-apexcharts';
+import { Component } from '@angular/core';
+import { MainComponent } from './Components/main/main.component';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +7,4 @@ import { ChartComponent, ApexAxisChartSeries, ApexChart, ApexYAxis, ApexXAxis, A
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  
 }

@@ -7,49 +7,50 @@
   height: auto;
   padding: 1rem 0;
 }
-.art {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px 2px 2px 2px solid gray;
-  box-shadow: 3px 4px rgb(240, 240, 240);
-  margin: 1rem 0;
-  border-radius: 10px;
-  height: 200px;
-  img {
-    border-radius: 10px;
+// .art {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   border: 2px 2px 2px 2px solid gray;
+//   box-shadow: 3px 4px rgb(240, 240, 240);
+//   margin: 1rem 0;
+//   border-radius: 10px;
+//   height: 200px;
+//   img {
+//     border-radius: 10px;
 
-    height: 200px;
-    width: 30%;
-  }
-  .body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin: 0 10px;
-    padding: 5px;
-    width: 60%;
-    height: inherit;
-    a,
-    p {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .atag {
-      color: black;
-      align-self: flex-start;
-      font-weight: bold;
-      margin-top: -20px;
-      padding-bottom: 10px;
-      text-decoration: underline;
-    }
-    .atag:hover {
-      color: #4c5cbc;
-    }
-  }
-}
+//     height: 200px;
+//     width: 30%;
+//   }
+//   .body {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     flex-direction: column;
+//     margin: 0 10px;
+//     padding: 5px;
+//     width: 60%;
+//     height: inherit;
+//     a,
+//     p {
+//       display: block;
+//       align-items: center;
+//       justify-content: center;
+//       overflow: hidden;
+//     }
+//     .atag {
+//       color: black;
+//       align-self: flex-start;
+//       font-weight: bold;
+//       margin-top: -20px;
+//       padding-bottom: 10px;
+//       text-decoration: underline;
+//     }
+//     .atag:hover {
+//       color: #4c5cbc;
+//     }
+//   }
+// }
 .search {
   display: flex;
   .form-control {
@@ -58,11 +59,11 @@
   }
 }
 
-.news {
-  width: 60%;
-  height: auto;
-  padding: 1rem 0;
-}
+// .news {
+//   width: 60%;
+//   height: auto;
+//   padding: 1rem 0;
+// }
 
 .smallLogo {
   height: 25px;
@@ -93,4 +94,27 @@
 
 .widh{
   display: inline-block;
+}
+
+.containerNews{
+  width: 100%;
+  height: 30%;
+}
+
+.imgNews{
+  height: 25%;
+  width: 30%;
+}
+
+.cardTitle {
+  cursor: pointer;
+  color: black;
+  align-self: flex-start;
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: larger;
+  text-align: center;
+}
+.cardTitle:hover {
+  color: #4c5cbc;
 }

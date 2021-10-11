@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { MainComponent } from './Components/main/main.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { GetApiInfoService } from './Services/get-api-info.service';
 
 @NgModule({
   declarations: [AppComponent, MainComponent],
@@ -17,7 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [GetApiInfoService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
