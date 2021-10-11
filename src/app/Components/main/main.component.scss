@@ -74,47 +74,32 @@
   font-size: x-large;
 }
 
-.btnSearchRes{
+.btnSearchRes {
   background-color: #1d3661;
   color: white;
   font-size: small;
 }
 
-.btnSearchRes:hover{
+.btnSearchRes:hover {
   background-color: #5e72e4;
 }
 
-.searchRes:first-child{
+.searchRes:first-child {
   color: #5e72e4;
 }
 
-.cardBody{
+.cardBody {
   min-height: 175px;
 }
 
-.widh{
+.widh {
   display: inline-block;
 }
-
-.containerNews{
-  width: 100%;
-  height: 30%;
-}
-
-.imgNews{
-  height: 25%;
-  width: 30%;
-}
-
-.cardTitle {
-  cursor: pointer;
-  color: black;
-  align-self: flex-start;
-  font-weight: bold;
-  text-decoration: underline;
-  font-size: larger;
-  text-align: center;
-}
-.cardTitle:hover {
-  color: #4c5cbc;
+.ptag {
+  @media screen and (max-width: 768px) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    font-size: 14px;
+  }
 }
